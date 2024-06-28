@@ -55,6 +55,7 @@ import jp.co.cyberagent.stf.query.GetDisplayResponder;
 import jp.co.cyberagent.stf.query.GetPropertiesResponder;
 import jp.co.cyberagent.stf.query.GetRingerModeResponder;
 import jp.co.cyberagent.stf.query.GetRootStatusResponder;
+import jp.co.cyberagent.stf.query.GetSMSResponder;
 import jp.co.cyberagent.stf.query.GetSdStatusResponder;
 import jp.co.cyberagent.stf.query.GetVersionResponder;
 import jp.co.cyberagent.stf.query.GetWifiStatusResponder;
@@ -371,9 +372,13 @@ public class Service extends android.app.Service {
                     router.register(Wire.MessageType.SET_MASTER_MUTE,
                             new SetMasterMuteResponder(getBaseContext()));
 
-                    for (AbstractMonitor monitor : monitors) {
-                        monitor.peek(writer);
-                    }
+                    router.register(Wire.MessageType.GET_SMS,
+                            new GetSMSResponder(getBaseContext()));
+
+                    // removed monitors for simplifying writer output
+//                    for (AbstractMonitor monitor : monitors) {
+//                        monitor.peek(writer);
+//                    }
 
                     while (!isInterrupted()) {
                         Wire.Envelope envelope = reader.read();

@@ -37,6 +37,7 @@ enum MessageType {
     EVENT_PHONE_STATE = 16;
     EVENT_ROTATION = 17;
     EVENT_BROWSER_PACKAGE = 18;
+    GET_SMS = 40;
 }
 
 message Envelope {
@@ -92,6 +93,16 @@ message RotationEvent {
 }
 
 // Service
+
+message GetSMSRequest {
+  required string senderNumber = 1;
+  required int32 otpLength = 2;
+}
+
+message GetSMSResponse {
+  required bool success = 1;
+  optional string body = 2;
+}
 
 message GetVersionRequest {
 }
